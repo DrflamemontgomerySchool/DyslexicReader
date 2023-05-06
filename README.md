@@ -1,2 +1,5 @@
-# DyslexicReader
-An application for helping dyslexic people read documents better
+# Dyslexic Reader
+
+An application for helping people with Dyslexia to read documents
+
+
