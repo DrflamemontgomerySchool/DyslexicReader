@@ -1,3 +1,4 @@
+import 'package:dyslexic_reader/style_generator.dart';
 import 'package:flutter/material.dart';
 
 class TextLoader extends StatelessWidget {
@@ -5,30 +6,35 @@ class TextLoader extends StatelessWidget {
 
   final String str;
 
+  TextSpan _createWord(StyleGenerator styleGenerator, String word) {
+    return TextSpan(
+      text: '$word ',
+      style: styleGenerator.getNextStyle(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<TextStyle> textStyles = [
-      const TextStyle(fontStyle: FontStyle.italic),
-      const TextStyle(fontWeight: FontWeight.bold),
-    ];
-
-    int index = 0;
-
-    TextStyle getNextStyle() {
-      index = (index + 1) % 2;
-      return textStyles[index];
-    }
+    StyleGenerator generator = StyleGenerator(
+      context: context,
+      rules: const StyleRules(
+        bold: true,
+        normal: true,
+        randomSize: true,
+        // color: [
+        //   Colors.red,
+        //   Colors.blue,
+        //   Colors.green,
+        // ],
+      ),
+    );
 
     return RichText(
       text: TextSpan(
           text: '',
           style: Theme.of(context).textTheme.bodyText2,
           children: [
-            for (String word in str.split(' '))
-              TextSpan(
-                text: '$word ',
-                style: getNextStyle(),
-              )
+            for (String word in str.split(' ')) _createWord(generator, word)
           ]),
     );
   }
