@@ -16,6 +16,7 @@ void styleTestMain() {
       (WidgetTester tester) async {
     await tester.pumpWidget(createContext(styleTestNormal));
     await tester.pumpWidget(createContext(styleTestBold));
+    await tester.pumpWidget(createContext(styleTestNormalAndBold));
   });
 }
 
@@ -25,8 +26,8 @@ void styleTestNormal(BuildContext context) {
     rules: const StyleRules(normal: true),
   );
 
-  TextStyle style = test.getNextStyle();
-  expect(style, const TextStyle());
+  expect(test.getNextStyle(), const TextStyle());
+  expect(test.getNextStyle(), const TextStyle());
 }
 
 void styleTestBold(BuildContext context) {
@@ -35,16 +36,16 @@ void styleTestBold(BuildContext context) {
     rules: const StyleRules(bold: true),
   );
 
-  TextStyle style = test.getNextStyle();
-  expect(style.fontWeight, FontWeight.w900);
+  expect(test.getNextStyle().fontWeight, FontWeight.w900);
+  expect(test.getNextStyle().fontWeight, FontWeight.w900);
 }
 
-void styleTestBoldAndNormal(BuildContext context) {
+void styleTestNormalAndBold(BuildContext context) {
   StyleGenerator test = StyleGenerator(
     context: context,
-    rules: const StyleRules(bold: true),
+    rules: const StyleRules(bold: true, normal: true),
   );
 
-  TextStyle style = test.getNextStyle();
-  expect(style.fontWeight, FontWeight.w900);
+  expect(test.getNextStyle(), const TextStyle());
+  expect(test.getNextStyle().fontWeight, FontWeight.w900);
 }
