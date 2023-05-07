@@ -1,4 +1,3 @@
-// ignore_for_file: constant_identifier_names
 import "dart:math";
 import 'package:flutter/material.dart';
 
@@ -20,7 +19,6 @@ class StyleGenerator {
     if (rules.color!.isEmpty) return null;
 
     colorStyleIndex = (colorStyleIndex + 1) % rules.color!.length;
-    print('$colorStyleIndex');
     return rules.color![colorStyleIndex];
   }
 
@@ -32,13 +30,10 @@ class StyleGenerator {
     Color? color = _getFontColor();
 
     switch (wordRules[wordRuleIndex]) {
-      case WordRules.Bold:
+      case WordRules.bold:
         fontWeight = FontWeight.w900;
         break;
-      case WordRules.Italic:
-        fontStyle = FontStyle.italic;
-        break;
-      case WordRules.Normal:
+      case WordRules.normal:
         break;
     }
 
@@ -51,27 +46,24 @@ class StyleGenerator {
   }
 }
 
-enum WordRules { Normal, Bold, Italic }
+enum WordRules { normal, bold }
 
 class StyleRules {
   const StyleRules(
       {this.normal = false,
       this.bold = false,
-      this.italic = false,
       this.randomSize = false,
       this.color});
 
   final bool normal;
   final bool bold;
-  final bool italic;
   final bool randomSize;
   final List<Color>? color;
 
   List<WordRules> getWordRules() {
     List<WordRules> wordRules = [];
-    if (normal) wordRules.add(WordRules.Normal);
-    if (bold) wordRules.add(WordRules.Bold);
-    if (italic) wordRules.add(WordRules.Italic);
+    if (normal) wordRules.add(WordRules.normal);
+    if (bold) wordRules.add(WordRules.bold);
 
     return wordRules;
   }
