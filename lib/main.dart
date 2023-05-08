@@ -25,7 +25,10 @@ class DyslexicReader extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.lightGreen,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: {
+        '/': (context) => const MyHomePage(title: 'Flutter Demo Home Page'),
+      },
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -61,29 +64,46 @@ class MyHomePage extends StatelessWidget {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            TextLoader(
-                str:
+        child: Container(
+          margin: const EdgeInsets.only(
+            left: 16.0,
+            right: 16.0,
+          ),
+          child: Column(
+            // Column is also a layout widget. It takes a list of children and
+            // arranges them vertically. By default, it sizes itself to fit its
+            // children horizontally, and tries to be as tall as its parent.
+            //
+            // Invoke "debug painting" (press "p" in the console, choose the
+            // "Toggle Debug Paint" action from the Flutter Inspector in Android
+            // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+            // to see the wireframe for each widget.
+            //
+            // Column has various properties to control how it sizes itself and
+            // how it positions its children. Here we use mainAxisAlignment to
+            // center the children vertically; the main axis here is the vertical
+            // axis because Columns are vertical (the cross axis would be
+            // horizontal).
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(bottom: 10),
+                child: const TextLoader(
+                    str:
+                        "Escape to Senegal with Poulet Yassa, a dish that is pure sunshine on a plate. I love serving and teaching this recipe. It is one of the most popular dishes at my feasts and cookery classes, and is especially easy to cook, with readily available ingredients. It truly teaches us to trust the process, trust the ingredients and trust your instincts when cooking. I usually encourage my cooks to taste the raw sauce at the very beginning (before adding the chicken) and then taste it again after cooking, as this dish is full of surprises as it transforms from lip-puckering tartness, to sweet, spicy, zingy and balanced. I love using a combination of sweeter lemons and tart limes. Your yassa can be as mild or as fiery as you wish. Finely mince the scotch bonnet for lots of heat or pierce the chilli and tuck it into the sauce to release its warming and fragrant oils for less heat. You can also omit the scotch bonnet entirely or swap it for other chillies (see my notes about cooking with chillies on page 19 in Africana) and play around with it in different ways. But that tingling heat is a big part of the rousing West African experience. Trust me!"),
+              ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 10),
+                child: const TextLoader(
+                    str: "Testing Numbers 10000000000 1361825352"),
+              ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 10),
+                child: const Text(
                     "Escape to Senegal with Poulet Yassa, a dish that is pure sunshine on a plate. I love serving and teaching this recipe. It is one of the most popular dishes at my feasts and cookery classes, and is especially easy to cook, with readily available ingredients. It truly teaches us to trust the process, trust the ingredients and trust your instincts when cooking. I usually encourage my cooks to taste the raw sauce at the very beginning (before adding the chicken) and then taste it again after cooking, as this dish is full of surprises as it transforms from lip-puckering tartness, to sweet, spicy, zingy and balanced. I love using a combination of sweeter lemons and tart limes. Your yassa can be as mild or as fiery as you wish. Finely mince the scotch bonnet for lots of heat or pierce the chilli and tuck it into the sauce to release its warming and fragrant oils for less heat. You can also omit the scotch bonnet entirely or swap it for other chillies (see my notes about cooking with chillies on page 19 in Africana) and play around with it in different ways. But that tingling heat is a big part of the rousing West African experience. Trust me!"),
-            Text(
-                "Escape to Senegal with Poulet Yassa, a dish that is pure sunshine on a plate. I love serving and teaching this recipe. It is one of the most popular dishes at my feasts and cookery classes, and is especially easy to cook, with readily available ingredients. It truly teaches us to trust the process, trust the ingredients and trust your instincts when cooking. I usually encourage my cooks to taste the raw sauce at the very beginning (before adding the chicken) and then taste it again after cooking, as this dish is full of surprises as it transforms from lip-puckering tartness, to sweet, spicy, zingy and balanced. I love using a combination of sweeter lemons and tart limes. Your yassa can be as mild or as fiery as you wish. Finely mince the scotch bonnet for lots of heat or pierce the chilli and tuck it into the sauce to release its warming and fragrant oils for less heat. You can also omit the scotch bonnet entirely or swap it for other chillies (see my notes about cooking with chillies on page 19 in Africana) and play around with it in different ways. But that tingling heat is a big part of the rousing West African experience. Trust me!"),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

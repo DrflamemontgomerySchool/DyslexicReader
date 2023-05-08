@@ -23,7 +23,7 @@ void styleTestMain() {
 void styleTestNormal(BuildContext context) {
   StyleGenerator test = StyleGenerator(
     context: context,
-    rules: const StyleRules(normal: true),
+    rules: StyleRules(normal: true),
   );
 
   expect(test.getNextStyle(), const TextStyle());
@@ -33,7 +33,7 @@ void styleTestNormal(BuildContext context) {
 void styleTestBold(BuildContext context) {
   StyleGenerator test = StyleGenerator(
     context: context,
-    rules: const StyleRules(bold: true),
+    rules: StyleRules(bold: true),
   );
 
   expect(test.getNextStyle().fontWeight, FontWeight.w900);
@@ -43,7 +43,7 @@ void styleTestBold(BuildContext context) {
 void styleTestNormalAndBold(BuildContext context) {
   StyleGenerator test = StyleGenerator(
     context: context,
-    rules: const StyleRules(bold: true, normal: true),
+    rules: StyleRules(bold: true, normal: true),
   );
 
   expect(test.getNextStyle(), const TextStyle());
