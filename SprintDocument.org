@@ -1,0 +1,23 @@
+* Sprint 1
+
+** Scrum Master
+
+In the first week, Ashton implemented a text renderer
+that can render text in bold or regular weight; colored
+text; randomly sized text; and text that formats numbers.
+
+** Artistic Director
+In the first week, I lanned the application to have some different
+menus. We will have the main menu which allows you to open files.
+Recent files will be displayed on the front page as well. I want
+most of the features to be displayed on the main page.
+
+** Version Controller
+
+In the first week, I added the project template. I pushed the
+Text Renderer and Testing Program to the codebase.
+
+** Tester
+
+In this week I created the testing program to test that the
+Style Generator generates the correct font with the parameters
