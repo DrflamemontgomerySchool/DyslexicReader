@@ -23,29 +23,44 @@ void styleTestMain() {
 void styleTestNormal(BuildContext context) {
   StyleGenerator test = StyleGenerator(
     context: context,
-    rules: StyleRules(normal: true),
+    rules: StyleRules(
+      normal: true,
+      bold: false,
+      randomSize: false,
+    ),
   );
 
-  expect(test.getNextStyle(), const TextStyle());
-  expect(test.getNextStyle(), const TextStyle());
+  expect(test.getNextStyle(), const TextStyle(fontSize: 14));
+  expect(test.getNextStyle(), const TextStyle(fontSize: 14));
 }
 
 void styleTestBold(BuildContext context) {
   StyleGenerator test = StyleGenerator(
     context: context,
-    rules: StyleRules(bold: true),
+    rules: StyleRules(
+      bold: true,
+      normal: false,
+      randomSize: false,
+    ),
   );
 
-  expect(test.getNextStyle().fontWeight, FontWeight.w900);
-  expect(test.getNextStyle().fontWeight, FontWeight.w900);
+  expect(test.getNextStyle(),
+      const TextStyle(fontWeight: FontWeight.w900, fontSize: 14));
+  expect(test.getNextStyle(),
+      const TextStyle(fontWeight: FontWeight.w900, fontSize: 14));
 }
 
 void styleTestNormalAndBold(BuildContext context) {
   StyleGenerator test = StyleGenerator(
     context: context,
-    rules: StyleRules(bold: true, normal: true),
+    rules: StyleRules(
+      bold: true,
+      normal: true,
+      randomSize: false,
+    ),
   );
 
-  expect(test.getNextStyle(), const TextStyle());
-  expect(test.getNextStyle().fontWeight, FontWeight.w900);
+  expect(test.getNextStyle(), const TextStyle(fontSize: 14));
+  expect(test.getNextStyle(),
+      const TextStyle(fontWeight: FontWeight.w900, fontSize: 14));
 }
