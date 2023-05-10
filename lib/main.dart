@@ -1,4 +1,6 @@
+import 'package:dyslexic_reader/style_generator.dart';
 import 'package:dyslexic_reader/text_loader.dart';
+import 'package:dyslexic_reader/text_test.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -85,23 +87,24 @@ class MyHomePage extends StatelessWidget {
             // axis because Columns are vertical (the cross axis would be
             // horizontal).
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 10),
-                child: const TextLoader(
-                    str:
-                        "Escape to Senegal with Poulet Yassa, a dish that is pure sunshine on a plate. I love serving and teaching this recipe. It is one of the most popular dishes at my feasts and cookery classes, and is especially easy to cook, with readily available ingredients. It truly teaches us to trust the process, trust the ingredients and trust your instincts when cooking. I usually encourage my cooks to taste the raw sauce at the very beginning (before adding the chicken) and then taste it again after cooking, as this dish is full of surprises as it transforms from lip-puckering tartness, to sweet, spicy, zingy and balanced. I love using a combination of sweeter lemons and tart limes. Your yassa can be as mild or as fiery as you wish. Finely mince the scotch bonnet for lots of heat or pierce the chilli and tuck it into the sauce to release its warming and fragrant oils for less heat. You can also omit the scotch bonnet entirely or swap it for other chillies (see my notes about cooking with chillies on page 19 in Africana) and play around with it in different ways. But that tingling heat is a big part of the rousing West African experience. Trust me!"),
+            children: const [
+              TextTest(
+                paragraphs: [
+                  "Escape to Senegal with Poulet Yassa, a dish that is pure sunshine on a plate. I love serving and teaching this recipe. It is one of the most popular dishes at my feasts and cookery classes, and is especially easy to cook, with readily available ingredients. It truly teaches us to trust the process, trust the ingredients and trust your instincts when cooking. I usually encourage my cooks to taste the raw sauce at the very beginning (before adding the chicken) and then taste it again after cooking, as this dish is full of surprises as it transforms from lip-puckering tartness, to sweet, spicy, zingy and balanced. I love using a combination of sweeter lemons and tart limes. Your yassa can be as mild or as fiery as you wish. Finely mince the scotch bonnet for lots of heat or pierce the chilli and tuck it into the sauce to release its warming and fragrant oils for less heat. You can also omit the scotch bonnet entirely or swap it for other chillies (see my notes about cooking with chillies on page 19 in Africana) and play around with it in different ways. But that tingling heat is a big part of the rousing West African experience. Trust me!",
+                  "Testing Numbers 10000000000 1361825352",
+                ],
               ),
-              Container(
-                margin: const EdgeInsets.only(bottom: 10),
-                child: const TextLoader(
-                    str: "Testing Numbers 10000000000 1361825352"),
-              ),
-              Container(
-                margin: const EdgeInsets.only(bottom: 10),
-                child: const Text(
-                    "Escape to Senegal with Poulet Yassa, a dish that is pure sunshine on a plate. I love serving and teaching this recipe. It is one of the most popular dishes at my feasts and cookery classes, and is especially easy to cook, with readily available ingredients. It truly teaches us to trust the process, trust the ingredients and trust your instincts when cooking. I usually encourage my cooks to taste the raw sauce at the very beginning (before adding the chicken) and then taste it again after cooking, as this dish is full of surprises as it transforms from lip-puckering tartness, to sweet, spicy, zingy and balanced. I love using a combination of sweeter lemons and tart limes. Your yassa can be as mild or as fiery as you wish. Finely mince the scotch bonnet for lots of heat or pierce the chilli and tuck it into the sauce to release its warming and fragrant oils for less heat. You can also omit the scotch bonnet entirely or swap it for other chillies (see my notes about cooking with chillies on page 19 in Africana) and play around with it in different ways. But that tingling heat is a big part of the rousing West African experience. Trust me!"),
-              ),
+              // TextLoader(
+              //   str:
+              //       "Escape to Senegal with Poulet Yassa, a dish that is pure sunshine on a plate. I love serving and teaching this recipe. It is one of the most popular dishes at my feasts and cookery classes, and is especially easy to cook, with readily available ingredients. It truly teaches us to trust the process, trust the ingredients and trust your instincts when cooking. I usually encourage my cooks to taste the raw sauce at the very beginning (before adding the chicken) and then taste it again after cooking, as this dish is full of surprises as it transforms from lip-puckering tartness, to sweet, spicy, zingy and balanced. I love using a combination of sweeter lemons and tart limes. Your yassa can be as mild or as fiery as you wish. Finely mince the scotch bonnet for lots of heat or pierce the chilli and tuck it into the sauce to release its warming and fragrant oils for less heat. You can also omit the scotch bonnet entirely or swap it for other chillies (see my notes about cooking with chillies on page 19 in Africana) and play around with it in different ways. But that tingling heat is a big part of the rousing West African experience. Trust me!",
+              //   rules: StyleRules(),
+              // ),
+              // TextLoader(
+              //   str: "Testing Numbers 10000000000 1361825352",
+              //   rules: StyleRules(),
+              // ),
+              // const Text(
+              //     "Escape to Senegal with Poulet Yassa, a dish that is pure sunshine on a plate. I love serving and teaching this recipe. It is one of the most popular dishes at my feasts and cookery classes, and is especially easy to cook, with readily available ingredients. It truly teaches us to trust the process, trust the ingredients and trust your instincts when cooking. I usually encourage my cooks to taste the raw sauce at the very beginning (before adding the chicken) and then taste it again after cooking, as this dish is full of surprises as it transforms from lip-puckering tartness, to sweet, spicy, zingy and balanced. I love using a combination of sweeter lemons and tart limes. Your yassa can be as mild or as fiery as you wish. Finely mince the scotch bonnet for lots of heat or pierce the chilli and tuck it into the sauce to release its warming and fragrant oils for less heat. You can also omit the scotch bonnet entirely or swap it for other chillies (see my notes about cooking with chillies on page 19 in Africana) and play around with it in different ways. But that tingling heat is a big part of the rousing West African experience. Trust me!"),
             ],
           ),
         ),
