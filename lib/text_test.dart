@@ -32,18 +32,6 @@ class _TextTestState extends State<TextTest> {
     };
   }
 
-  void _changeBold(bool? value) {
-    _rules.value.bold = value!;
-    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-    _rules.notifyListeners();
-  }
-
-  void _changeNormal(bool? value) {
-    _rules.value.normal = value!;
-    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-    _rules.notifyListeners();
-  }
-
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
