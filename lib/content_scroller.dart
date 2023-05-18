@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 
 class ContentScroller extends StatelessWidget {
   const ContentScroller(
-      {super.key, required this.paragraphs, required this.rules});
+      {super.key, required this.paragraphs, required this.rules, this.seed});
 
   final List<String> paragraphs;
   final StyleRules rules;
+  final int? seed;
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,7 @@ class ContentScroller extends StatelessWidget {
       itemCount: paragraphs.length,
       itemBuilder: (BuildContext context, int index) {
         return TextLoader(
+          seed: (seed ?? hashCode) + index,
           str: paragraphs[index],
           rules: rules,
         );

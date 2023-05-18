@@ -1,5 +1,6 @@
 import 'package:dyslexic_reader/content_scroller.dart';
 import 'package:dyslexic_reader/style_generator.dart';
+import 'package:dyslexic_reader/text_display_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -24,12 +25,10 @@ class DyslexicReader extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.lightGreen,
+        primarySwatch: Colors.grey,
       ),
-      routes: {
-        '/': (context) => const MyHomePage(title: 'Flutter Demo Home Page'),
-      },
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: TextDisplayPage(),
     );
   }
 }

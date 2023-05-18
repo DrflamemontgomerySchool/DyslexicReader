@@ -3,13 +3,14 @@ import "package:intl/intl.dart";
 import 'package:flutter/material.dart';
 
 class StyleGenerator {
-  StyleGenerator({required this.context, required this.rules}) {
+  StyleGenerator({required this.context, required this.rules, this.seed}) {
     wordRules = rules.getWordRules();
   }
 
+  final int? seed;
   final BuildContext context;
   final StyleRules rules;
-  final Random rng = Random();
+  late final Random rng = Random(seed);
   late final List<WordRules> wordRules;
 
   int wordRuleIndex = -1;
