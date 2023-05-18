@@ -18,7 +18,7 @@ class ContentScroller extends StatelessWidget {
       itemCount: paragraphs.length,
       itemBuilder: (BuildContext context, int index) {
         return TextLoader(
-          seed: (seed ?? hashCode) + index,
+          seed: ((seed ?? hashCode) / (index + 1)).round(),
           str: paragraphs[index],
           rules: rules,
         );
