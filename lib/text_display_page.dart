@@ -27,9 +27,14 @@ class TextDisplayPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: ShapedRow(
-          decoration: BoxDecoration(
+          /*decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.circular(5.0),
+          ),*/
+          wrapper: (BuildContext context, Widget child) => Material(
+            color: Theme.of(context).colorScheme.background,
+            borderRadius: BorderRadius.circular(5.0),
+            child: child,
           ),
           padding: const EdgeInsets.only(left: 5),
           margin: const EdgeInsets.only(right: 10),
@@ -43,6 +48,12 @@ class TextDisplayPage extends StatelessWidget {
               onChanged: _changeRules((value) => _rules.value.normal = value!),
               value: _rules.value.normal,
               label: const Text("Normal"),
+            ),
+            LabeledCheckBox(
+              onChanged:
+                  _changeRules((value) => _rules.value.randomSize = value!),
+              value: _rules.value.randomSize,
+              label: const Text("Change Size"),
             ),
           ],
         ),
@@ -59,22 +70,8 @@ class TextDisplayPage extends StatelessWidget {
             rules: _rules.value,
             seed: seed,
           ),
-          /*child: ContentScroller(
-            seed: seed,
-            paragraphs: [
-              for (int index = 0; index < 10; index++)
-                'Testing the \nString that has \nnew Lines\n$index'
-            ],
-            rules: StyleRules(bold: value.bold, normal: value.normal),
-          ),*/
         ),
       ),
-      // body: TextLoader(
-      //   rules: value,
-      //   seed: seed,
-      //   str:
-      //       "This is a test string for the example\nOf giving us the correct text",
-      // ),
     );
   }
 

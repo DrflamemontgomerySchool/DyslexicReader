@@ -7,14 +7,35 @@ class ShapedRow extends StatelessWidget {
     this.padding,
     this.margin,
     this.decoration,
+    this.wrapper,
   });
 
   final List<Widget> children;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final BoxDecoration? decoration;
+  final Function(BuildContext, Widget)? wrapper;
+
+  Widget _wrapPadding(Widget child, EdgeInsetsGeometry? padding) {
+    if (padding != null) {
+      return Padding(padding: padding, child: child);
+    }
+    return child;
+  }
 
   Widget buildPaddedChild(BuildContext context, Widget child) {
+    if (wrapper != null) {
+      return _wrapPadding(
+        wrapper!(
+          context,
+          _wrapPadding(
+            child,
+            padding,
+          ),
+        ),
+        margin,
+      );
+    }
     return Container(
       decoration: decoration,
       margin: margin,
