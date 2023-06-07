@@ -2,6 +2,7 @@ import 'package:dyslexic_reader/content_scroller.dart';
 import 'package:dyslexic_reader/style_generator.dart';
 import 'package:dyslexic_reader/text_display_page.dart';
 import 'package:flutter/material.dart';
+import 'package:quill_html_editor/quill_html_editor.dart';
 
 void main() {
   runApp(const DyslexicReader());

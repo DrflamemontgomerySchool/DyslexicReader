@@ -22,7 +22,6 @@ void styleTestMain() {
 
 void styleTestNormal(BuildContext context) {
   StyleGenerator test = StyleGenerator(
-    context: context,
     rules: StyleRules(
       normal: true,
       bold: false,
@@ -36,7 +35,6 @@ void styleTestNormal(BuildContext context) {
 
 void styleTestBold(BuildContext context) {
   StyleGenerator test = StyleGenerator(
-    context: context,
     rules: StyleRules(
       bold: true,
       normal: false,
@@ -52,7 +50,6 @@ void styleTestBold(BuildContext context) {
 
 void styleTestNormalAndBold(BuildContext context) {
   StyleGenerator test = StyleGenerator(
-    context: context,
     rules: StyleRules(
       bold: true,
       normal: true,

@@ -26,7 +26,6 @@ class TextLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     StyleGenerator generator = StyleGenerator(
-      context: context,
       rules: rules,
       seed: seed,
     );
