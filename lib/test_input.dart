@@ -34,10 +34,40 @@ class TestInput extends StatelessWidget {
 }
 
 class TestController extends TextEditingController {
-  TestController({required this.rules, this.seed, required super.text});
+  TestController({required this.rules, this.seed, required super.text}) {
+    StyleGenerator styleGenerator = StyleGenerator(rules: rules, seed: seed);
+
+    generatedStyles = [
+      for (int styleIdx = 0; styleIdx < _GENERATED_STYLE_LENGTH; styleIdx++)
+        styleGenerator.getNextStyle()
+    ];
+  }
+
+  // ignore: constant_identifier_names
+  static const int _GENERATED_STYLE_LENGTH = 20;
 
   final StyleRules rules;
   final int? seed;
+
+  late final List<TextStyle> generatedStyles;
+
+  List<TextSpan> _generateStyledText(String words, TextStyle? style) {
+    final List<TextSpan> words = [];
+    int styleIdx = 0;
+    for (String word in text.split(' ')) {
+      words.add(
+        TextSpan(
+          text: '$word ',
+          style: style?.merge(
+            generatedStyles[styleIdx],
+          ),
+        ),
+      );
+      styleIdx++;
+      styleIdx %= _GENERATED_STYLE_LENGTH;
+    }
+    return words;
+  }
 
   @override
   TextSpan buildTextSpan({
@@ -45,9 +75,27 @@ class TestController extends TextEditingController {
     TextStyle? style,
     required bool withComposing,
   }) {
+    assert(!value.composing.isValid ||
+        !withComposing ||
+        value.isComposingRangeValid);
+
+    final bool composingRegionOutOfRange =
+        !value.isComposingRangeValid || !withComposing;
+
+    if (composingRegionOutOfRange) {
+      return TextSpan(children: _generateStyledText(text, style));
+    }
+
     return TextSpan(
       style: style,
-      children: TextStyler.createWords(rules, seed, style, text),
+      children: [
+        TextSpan(text: value.composing.textBefore(value.text)),
+        TextSpan(
+          children: _generateStyledText(
+              value.composing.textInside(value.text), style),
+        ),
+        TextSpan(text: value.composing.textAfter(value.text))
+      ],
     );
   }
 }

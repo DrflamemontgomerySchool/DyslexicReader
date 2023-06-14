@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:dyslexic_reader/app_side_menu.dart';
 import 'package:dyslexic_reader/labeled_checkbox.dart';
 import 'package:dyslexic_reader/markdown_test.dart';
 import 'package:dyslexic_reader/page_scroller.dart';
@@ -17,14 +18,15 @@ import 'package:markdown_editor_plus/markdown_editor_plus.dart';
 import 'content_scroller.dart';
 
 class TextDisplayPage extends StatelessWidget {
-  TextDisplayPage({super.key});
+  TextDisplayPage({super.key, this.text});
 
   final ValueNotifier<StyleRules> _rules =
       ValueNotifier<StyleRules>(StyleRules());
   late final int seed = hashCode;
-  final TestInputHolder testInputHolder = TestInputHolder(
-    text: 'Test Text',
-    readOnly: false,
+  final String? text;
+  late final TestInputHolder testInputHolder = TestInputHolder(
+    text: text ?? "Begin Writing...",
+    readOnly: text != null,
   );
 
   Function(bool?) _changeRules(Function(bool? value) fn) {
@@ -36,6 +38,7 @@ class TextDisplayPage extends StatelessWidget {
 
   Widget buildMainContent(BuildContext context, StyleRules value) {
     return Scaffold(
+      drawer: const AppSideMenu(),
       appBar: AppBar(
         title: ShapedRow(
           /*decoration: BoxDecoration(

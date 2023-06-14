@@ -19,4 +19,10 @@ class TextStyler {
       const TextSpan(text: '\n'),
     ];
   }
+
+  static List<TextSpan> createWordsWithStyle(TextStyle style, String line) {
+    return [
+      for (String word in line.split(' ')) TextSpan(style: style, text: word)
+    ];
+  }
 }
