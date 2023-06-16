@@ -1,7 +1,7 @@
 import 'package:dyslexic_reader/style_generator.dart';
 import 'package:flutter/material.dart';
 
-class TextStyler {
+//class TextStyler {
   static TextSpan _formatWord(
       StyleGenerator styleGenerator, TextStyle? style, String word) {
     return TextSpan(

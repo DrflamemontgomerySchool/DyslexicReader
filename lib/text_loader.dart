@@ -1,7 +1,7 @@
 import 'package:dyslexic_reader/style_generator.dart';
 import 'package:flutter/material.dart';
 
-class TextLoader extends StatelessWidget {
+// class TextLoader extends StatelessWidget {
   const TextLoader(
       {super.key, required this.str, required this.rules, this.seed});
 

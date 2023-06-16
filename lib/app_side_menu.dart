@@ -1,5 +1,4 @@
 import 'package:dyslexic_reader/sidebar/file_options.dart';
-import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 

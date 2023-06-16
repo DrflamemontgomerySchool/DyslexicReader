@@ -1,9 +1,8 @@
 import 'package:dyslexic_reader/app_side_menu.dart';
-import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 
 class SideMenuTest extends StatelessWidget {
-  SideMenuTest({super.key});
+  const SideMenuTest({super.key});
 
   @override
   Widget build(BuildContext context) {

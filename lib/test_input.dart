@@ -1,7 +1,5 @@
 import 'package:dyslexic_reader/style_generator.dart';
-import 'package:dyslexic_reader/text_styler.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class TestInput extends StatelessWidget {
   TestInput({

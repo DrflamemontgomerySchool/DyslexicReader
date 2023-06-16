@@ -1,15 +1,13 @@
 import 'package:dyslexic_reader/side_menu_test.dart';
-import 'package:dyslexic_reader/text_display_page.dart';
-import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(DyslexicReader());
+  runApp(const DyslexicReader());
 }
 
 // ignore: must_be_immutable
 class DyslexicReader extends StatelessWidget {
-  DyslexicReader({super.key});
+  const DyslexicReader({super.key});
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

@@ -1,21 +1,9 @@
-import 'dart:math';
-
 import 'package:dyslexic_reader/app_side_menu.dart';
 import 'package:dyslexic_reader/labeled_checkbox.dart';
-import 'package:dyslexic_reader/markdown_test.dart';
-import 'package:dyslexic_reader/page_scroller.dart';
 import 'package:dyslexic_reader/shaped_row.dart';
 import 'package:dyslexic_reader/style_generator.dart';
-import 'package:dyslexic_reader/test_input.dart';
 import 'package:dyslexic_reader/test_input_holder.dart';
-import 'package:dyslexic_reader/text_loader.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:markdown/markdown.dart' as md;
-import 'package:markdown_editor_plus/markdown_editor_plus.dart';
-
-import 'content_scroller.dart';
 
 class TextDisplayPage extends StatelessWidget {
   TextDisplayPage({super.key, this.text});
@@ -26,7 +14,7 @@ class TextDisplayPage extends StatelessWidget {
   final String? text;
   late final TestInputHolder testInputHolder = TestInputHolder(
     text: text ?? "Begin Writing...",
-    readOnly: text != null,
+    readOnly: false, //text != null,
   );
 
   Function(bool?) _changeRules(Function(bool? value) fn) {
@@ -73,14 +61,6 @@ class TextDisplayPage extends StatelessWidget {
         ),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        /*child: MarkdownTest(
-          data: "test text for markdown",
-          rules: value,
-          seed: hashCode,
-        ),*/
-        // child: TestInput(str: "Test", rules: value, seed: seed),
         child: Container(
           margin: const EdgeInsets.only(
             left: 16.0,
@@ -88,20 +68,6 @@ class TextDisplayPage extends StatelessWidget {
           ),
           child: testInputHolder.buildInput(value, seed),
         ),
-        // child: TextField(
-        //   maxLines: null,
-        //   expands: true,
-        // ),
-        // child: Container(
-        //   margin: const EdgeInsets.only(
-        //     left: 16.0,
-        //     right: 16.0,
-        //   ),
-        //   child: PageScroller(
-        //     rules: _rules.value,
-        //     seed: seed,
-        //   ),
-        // ),
       ),
     );
   }

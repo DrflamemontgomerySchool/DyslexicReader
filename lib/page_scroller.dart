@@ -1,7 +1,4 @@
-import 'package:dyslexic_reader/style_generator.dart';
-import 'package:dyslexic_reader/text_loader.dart';
 import 'package:flutter/material.dart';
-import 'package:faker/faker.dart';
 
 class PageScroller extends StatelessWidget {
   const PageScroller({
