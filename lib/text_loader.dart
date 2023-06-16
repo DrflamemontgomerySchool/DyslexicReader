@@ -10,9 +10,10 @@ class TextLoader extends StatelessWidget {
   final int? seed;
 
   TextSpan _formatWord(StyleGenerator styleGenerator, String word) {
+    final TextStyle style = styleGenerator.getNextStyle();
     return TextSpan(
       text: '${styleGenerator.formatWord(word)} ',
-      style: styleGenerator.getNextStyle(),
+      style: style,
     );
   }
 

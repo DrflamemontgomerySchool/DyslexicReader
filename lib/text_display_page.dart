@@ -23,7 +23,7 @@ class TextDisplayPage extends StatelessWidget {
       ValueNotifier<StyleRules>(StyleRules());
   late final int seed = hashCode;
   final TestInputHolder testInputHolder = TestInputHolder(
-    text: 'Test Text',
+    text: 'Test Tex"t"that"continues"a"lot',
     readOnly: false,
   );
 
