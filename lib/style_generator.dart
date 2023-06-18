@@ -1,12 +1,14 @@
 import "dart:math";
 import "package:intl/intl.dart";
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class StyleGenerator {
   StyleGenerator({required this.rules, this.seed}) {
     wordRules = rules.getWordRules();
   }
 
+  late int _seed = seed ?? hashCode;
   final int? seed;
   final StyleRules rules;
   late final Random rng = Random(seed);
@@ -56,13 +58,23 @@ class StyleGenerator {
         break;
     }
 
+    _seed++;
+
     return TextStyle(
       fontWeight: fontWeight,
       fontStyle: fontStyle,
       color: color,
       fontSize: fontSize,
+      fontFamily: _fonts[_seed % _fonts.length],
     );
   }
+
+  static final List<String?> _fonts = [
+    GoogleFonts.dancingScript().fontFamily,
+    GoogleFonts.oswald().fontFamily,
+    GoogleFonts.ptSerif().fontFamily,
+    GoogleFonts.spaceGrotesk().fontFamily,
+  ];
 }
 
 enum WordRules { normal, bold }
