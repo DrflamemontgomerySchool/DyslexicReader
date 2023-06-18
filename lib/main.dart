@@ -5,9 +5,9 @@ void main() {
   runApp(const DyslexicReader());
 }
 
-// ignore: must_be_immutable
 class DyslexicReader extends StatelessWidget {
   const DyslexicReader({super.key});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
