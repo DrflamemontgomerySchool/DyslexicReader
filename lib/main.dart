@@ -27,7 +27,7 @@ class DyslexicReader extends StatelessWidget {
       ),
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
       //home: TextDisplayPage(),
-      home: SideMenuTest(),
+      home: const SideMenuTest(),
     );
   }
 }
