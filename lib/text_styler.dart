@@ -1,14 +1,10 @@
 import 'package:dyslexic_reader/style_generator.dart';
 import 'package:flutter/material.dart';
 
-<<<<<<< HEAD
-//class TextStyler {
-=======
 class TextStyler {
   static const String _punctuationString = "'\";:,\\.\\[\\]\\(\\){}";
   static final RegExp _punctuationRegexMatch =
       RegExp('([^$_punctuationString]*)([$_punctuationString]+)(.*)');
->>>>>>> main
   static TextSpan _formatWord(
       StyleGenerator styleGenerator, TextStyle? style, String word) {
     if (word.isEmpty) return TextSpan(text: " ", style: style);
