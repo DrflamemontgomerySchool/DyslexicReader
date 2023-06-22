@@ -44,7 +44,12 @@ class StyleGenerator {
       fontSize += rng.nextInt(3) * 3;
     }
 
-    if (wordRules.isEmpty) return TextStyle(fontSize: fontSize);
+    if (wordRules.isEmpty) {
+      return TextStyle(
+        fontSize: fontSize,
+        fontFamily: rules.randomFonts ? _fonts[_seed % _fonts.length] : null,
+      );
+    }
     wordRuleIndex = (wordRuleIndex + 1) % wordRules.length;
     FontWeight? fontWeight;
     FontStyle? fontStyle;
@@ -65,7 +70,7 @@ class StyleGenerator {
       fontStyle: fontStyle,
       color: color,
       fontSize: fontSize,
-      fontFamily: _fonts[_seed % _fonts.length],
+      fontFamily: rules.randomFonts ? _fonts[_seed % _fonts.length] : null,
     );
   }
 
@@ -85,12 +90,14 @@ class StyleRules {
     this.bold = true,
     this.randomSize = true,
     this.nicerNumbers = true,
+    this.randomFonts = true,
     this.color,
   });
 
   bool normal;
   bool bold;
   bool randomSize;
+  bool randomFonts;
   bool nicerNumbers;
   List<Color>? color;
 
