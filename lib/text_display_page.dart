@@ -57,6 +57,12 @@ class TextDisplayPage extends StatelessWidget {
               value: _rules.value.randomSize,
               label: const Text("Change Size"),
             ),
+            LabeledCheckBox(
+              onChanged:
+                  _changeRules((value) => _rules.value.randomFonts = value!),
+              value: _rules.value.randomFonts,
+              label: const Text("Change Fonts"),
+            ),
           ],
         ),
       ),
