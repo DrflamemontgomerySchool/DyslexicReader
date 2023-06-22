@@ -28,7 +28,7 @@ class AppSideMenu extends StatelessWidget {
         children: [
           ListTile(
             leading: const Icon(
-              Icons.train, // Placeholder
+              Icons.train,
             ),
             title: const Text('Open File'),
             onTap: () async => openText(await browseAndOpenFile(), context),

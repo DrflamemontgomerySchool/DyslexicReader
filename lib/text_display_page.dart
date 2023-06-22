@@ -14,7 +14,7 @@ class TextDisplayPage extends StatelessWidget {
   final String? text;
   late final TestInputHolder testInputHolder = TestInputHolder(
     text: text ?? "Begin Writing...",
-    readOnly: false, //text != null,
+    readOnly: false,
   );
 
   Function(bool?) _changeRules(Function(bool? value) fn) {
@@ -29,10 +29,6 @@ class TextDisplayPage extends StatelessWidget {
       drawer: const AppSideMenu(),
       appBar: AppBar(
         title: ShapedRow(
-          /*decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
-            borderRadius: BorderRadius.circular(5.0),
-          ),*/
           wrapper: (BuildContext context, Widget child) => Material(
             color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.circular(5.0),

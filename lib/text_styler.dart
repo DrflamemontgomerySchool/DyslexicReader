@@ -22,12 +22,6 @@ class TextStyler {
         }
         text.add(TextSpan(text: match.group(2), style: punctuationStyle));
 
-        // if (match.group(3) == null || match.group(3) == "") {
-        //   print('string: ${match.input}, matches: ${[
-        //     for (int i = 0; i <= match.groupCount; i++) match.group(i)
-        //   ]}');
-        //   break;
-        // }
         String? lastWord = match.group(3);
         match = _punctuationRegexMatch.firstMatch(match.group(3) ?? "");
 
