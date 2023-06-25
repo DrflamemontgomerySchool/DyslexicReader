@@ -32,8 +32,11 @@ class HomePage extends StatelessWidget {
         columnSizes: [auto, 160.px, 160.px, auto],
         rowSizes: [auto, 60.px, 60.px, auto],
         children: [
-          _createTextButton("Open File", () => null)
-              .withGridPlacement(columnStart: 1, rowStart: 1),
+          _createTextButton(
+            "Open File",
+            () async => AppSideMenu.openText(
+                await AppSideMenu.browseAndOpenFile(), context),
+          ).withGridPlacement(columnStart: 1, rowStart: 1),
           _createTextButton("New File", () => null)
               .withGridPlacement(columnStart: 1, rowStart: 2),
           _createTextButton("Settings", () => null)

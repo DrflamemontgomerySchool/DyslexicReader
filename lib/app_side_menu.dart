@@ -9,14 +9,14 @@ import 'package:flutter/material.dart';
 class AppSideMenu extends StatelessWidget {
   const AppSideMenu({super.key});
 
-  Future<XFile?> browseAndOpenFile() async {
+  static Future<XFile?> browseAndOpenFile() async {
     XFile? file = await openFile(acceptedTypeGroups: <XTypeGroup>[
       const XTypeGroup(label: 'documents', extensions: <String>['txt'])
     ]);
     return file;
   }
 
-  void openText(XFile? file, BuildContext context) {
+  static void openText(XFile? file, BuildContext context) {
     Navigator.pop(context);
     FileOptions.displayFile(file, context);
   }
