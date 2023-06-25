@@ -1,13 +1,14 @@
 import 'package:dyslexic_reader/app_side_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   static ButtonStyle textButtonStyle = ButtonStyle(
-    minimumSize: MaterialStateProperty.resolveWith<Size?>(
+    fixedSize: MaterialStateProperty.resolveWith<Size?>(
       (Set<MaterialState> states) {
-        return const Size(60, 40);
+        return const Size(100, 40);
       },
     ),
   );
@@ -27,38 +28,16 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Home Page"),
       ),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: LayoutGrid(
+        columnSizes: [auto, 160.px, 160.px, auto],
+        rowSizes: [auto, 60.px, 60.px, auto],
         children: [
-          Padding(
-            padding: const EdgeInsets.all(50.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
-                  children: [
-                    _createTextButton("Open File", () => null),
-                    const Text(""),
-                    _createTextButton("New File", () => null),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(50.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _createTextButton("Settings", () => null),
-                const Text(
-                    "\n\n"), // To keep the formatting inline with the other side
-              ],
-            ),
-          ),
+          _createTextButton("Open File", () => null)
+              .withGridPlacement(columnStart: 1, rowStart: 1),
+          _createTextButton("New File", () => null)
+              .withGridPlacement(columnStart: 1, rowStart: 2),
+          _createTextButton("Settings", () => null)
+              .withGridPlacement(columnStart: 2, rowStart: 1),
         ],
       ),
     );
