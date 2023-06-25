@@ -1,3 +1,4 @@
+import 'package:dyslexic_reader/home_page.dart';
 import 'package:dyslexic_reader/sidebar/file_options.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,18 @@ class AppSideMenu extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
+          ListTile(
+            leading: const Icon(
+              Icons.train,
+            ),
+            title: const Text('Home'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => const HomePage(),
+              ));
+            },
+          ),
           ListTile(
             leading: const Icon(
               Icons.train,

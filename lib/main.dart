@@ -1,3 +1,4 @@
+import 'package:dyslexic_reader/home_page.dart';
 import 'package:dyslexic_reader/side_menu_test.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,8 @@ class DyslexicReader extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      home: const SideMenuTest(),
+      //home: const SideMenuTest(),
+      home: const HomePage(),
     );
   }
 }
