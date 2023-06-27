@@ -1,3 +1,4 @@
+import 'package:dyslexic_reader/home_page.dart';
 import 'package:dyslexic_reader/sidebar/file_options.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
@@ -8,14 +9,14 @@ import 'package:flutter/material.dart';
 class AppSideMenu extends StatelessWidget {
   const AppSideMenu({super.key});
 
-  Future<XFile?> browseAndOpenFile() async {
+  static Future<XFile?> browseAndOpenFile() async {
     XFile? file = await openFile(acceptedTypeGroups: <XTypeGroup>[
       const XTypeGroup(label: 'documents', extensions: <String>['txt'])
     ]);
     return file;
   }
 
-  void openText(XFile? file, BuildContext context) {
+  static void openText(XFile? file, BuildContext context) {
     Navigator.pop(context);
     FileOptions.displayFile(file, context);
   }
@@ -26,6 +27,18 @@ class AppSideMenu extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
+          ListTile(
+            leading: const Icon(
+              Icons.train,
+            ),
+            title: const Text('Home'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => const HomePage(),
+              ));
+            },
+          ),
           ListTile(
             leading: const Icon(
               Icons.train,
