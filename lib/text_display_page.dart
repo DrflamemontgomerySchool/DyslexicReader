@@ -5,6 +5,9 @@ import 'package:dyslexic_reader/style_generator.dart';
 import 'package:dyslexic_reader/test_input_holder.dart';
 import 'package:flutter/material.dart';
 
+// This is the app page that allows the user
+// to interact with text
+
 class TextDisplayPage extends StatelessWidget {
   TextDisplayPage({super.key, this.text});
 
