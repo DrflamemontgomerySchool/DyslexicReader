@@ -15,7 +15,11 @@ class FileOptions {
               if (snapshot.hasData) {
                 return TextDisplayPage(text: snapshot.data!);
               }
-              return const Text("Loading");
+              return Center(
+                  child: Text(
+                "Loading...",
+                style: Theme.of(context).textTheme.displayLarge,
+              ));
             }),
       ),
     );
