@@ -1,4 +1,6 @@
 import 'package:dyslexic_reader/app_side_menu.dart';
+import 'package:dyslexic_reader/richtext/test_page.dart';
+import 'package:dyslexic_reader/style_generator.dart';
 import 'package:dyslexic_reader/text_display_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
@@ -29,25 +31,29 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Home Page"),
       ),
-      body: LayoutGrid(
-        columnSizes: [auto, 160.px, 160.px, auto],
-        rowSizes: [auto, 60.px, 60.px, auto],
-        children: [
-          _createTextButton(
-            "Open File",
-            () async => AppSideMenu.openText(
-                await AppSideMenu.browseAndOpenFile(), context),
-          ).withGridPlacement(columnStart: 1, rowStart: 1),
-          _createTextButton("New File", () {
-            // Navigate to a new file that you can edit
-            Navigator.of(context).pop();
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => TextDisplayPage()));
-          }).withGridPlacement(columnStart: 1, rowStart: 2),
-          _createTextButton("Settings", () => null)
-              .withGridPlacement(columnStart: 2, rowStart: 1),
-        ],
+      body: TestPage(
+        rules: StyleRules(
+            bold: true, normal: true, randomFonts: true, randomSize: true),
       ),
+      // body: LayoutGrid(
+      //   columnSizes: [auto, 160.px, 160.px, auto],
+      //   rowSizes: [auto, 60.px, 60.px, auto],
+      //   children: [
+      //     _createTextButton(
+      //       "Open File",
+      //       () async => AppSideMenu.openText(
+      //           await AppSideMenu.browseAndOpenFile(), context),
+      //     ).withGridPlacement(columnStart: 1, rowStart: 1),
+      //     _createTextButton("New File", () {
+      //       // Navigate to a new file that you can edit
+      //       Navigator.of(context).pop();
+      //       Navigator.of(context).push(
+      //           MaterialPageRoute(builder: (context) => TextDisplayPage()));
+      //     }).withGridPlacement(columnStart: 1, rowStart: 2),
+      //     _createTextButton("Settings", () => null)
+      //         .withGridPlacement(columnStart: 2, rowStart: 1),
+      //   ],
+      // ),
     );
   }
 }
