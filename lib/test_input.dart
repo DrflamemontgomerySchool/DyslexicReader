@@ -18,14 +18,19 @@ class TestInput extends StatelessWidget {
   final TextEditingController controller;
   final Function(String)? onTextChange;
 
+  void textChanged(String text) {
+    if (onTextChange != null) onTextChange!(text);
+    controller.clearComposing();
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextField(
       maxLines: null,
       expands: true,
       controller: controller,
-      style: Theme.of(context).textTheme.bodyText2,
-      onChanged: onTextChange,
+      style: Theme.of(context).textTheme.bodyMedium,
+      onChanged: textChanged,
       readOnly: readOnly,
     );
   }
@@ -139,9 +144,9 @@ class TestController extends TextEditingController {
     }
 
     return TextSpan(
+      text: value.composing.textBefore(value.text),
       style: style,
       children: [
-        TextSpan(text: value.composing.textBefore(value.text)),
         TextSpan(
           children: _generateStyledText(
               value.composing.textInside(value.text), style),

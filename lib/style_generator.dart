@@ -94,6 +94,14 @@ class StyleRules {
     this.color,
   });
 
+  bool equals(StyleRules rules) {
+    return normal == rules.normal &&
+        bold == rules.bold &&
+        randomSize == rules.randomSize &&
+        nicerNumbers == rules.nicerNumbers &&
+        randomFonts == rules.randomFonts;
+  }
+
   bool normal;
   bool bold;
   bool randomSize;

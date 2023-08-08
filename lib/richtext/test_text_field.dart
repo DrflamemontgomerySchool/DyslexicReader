@@ -1,6 +1,12 @@
 import 'package:dyslexic_reader/richtext/custom_editor.dart';
+import 'package:dyslexic_reader/richtext/custom_editor_mkII.dart';
+import 'package:dyslexic_reader/richtext/quill_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:flutter_quill/src/widgets/raw_editor.dart';
+import 'package:flutter_quill/src/widgets/cursor.dart';
+
+import '../style_generator.dart';
 
 class TestTextField extends StatefulWidget {
   const TestTextField({super.key});
@@ -18,6 +24,8 @@ class _TestTextField extends State<TestTextField> {
     super.initState();
 
     _controller = QuillController.basic();
+    _controller.document.insert(0, "Test Text");
+    print(_controller.document.getPlainText(0, _controller.document.length));
     _controller.addListener(onChange);
     _controller.onSelectionChanged = selectionChanged;
   }
@@ -44,18 +52,52 @@ class _TestTextField extends State<TestTextField> {
 
   @override
   Widget build(BuildContext context) {
-    /*return QuillEditor(
+    return QuillExtension(
       controller: _controller,
-      scrollable: true,
-      expands: true,
-      autoFocus: false,
       focusNode: _focusNode,
-      padding: EdgeInsets.zero,
-      readOnly: false,
       scrollController: ScrollController(),
-    );*/
-    return CustomEditor(
-      controller: _controller,
+      scrollable: true,
+      padding: EdgeInsets.zero,
+      autoFocus: false,
+      readOnly: false,
+      expands: true,
     );
+    // return QuillEditor(
+    //   controller: _controller,
+    //   scrollable: true,
+    //   expands: true,
+    //   autoFocus: false,
+    //   focusNode: _focusNode,
+    //   padding: EdgeInsets.zero,
+    //   readOnly: false,
+    //   scrollController: ScrollController(),
+    // );
+    // return CustomEditor(
+    //   controller: _controller,
+    //   styleRules: StyleRules(
+    //     bold: true,
+    //     normal: true,
+    //     randomSize: true,
+    //     randomFonts: true,
+    //   ),
+    // );
+
+    // return CustomEditorMKII(
+    //   controller: _controller,
+    //   focusNode: FocusNode(),
+    //   scrollController: ScrollController(),
+    //   scrollBottomInset: 2.0,
+    //   cursorStyle: const CursorStyle(
+    //     backgroundColor: Colors.white,
+    //     color: Colors.black,
+    //   ),
+    //   selectionColor: Colors.black45,
+    //   selectionCtrls: EmptyTextSelectionControls(),
+    //   embedBuilder: (_) => EmptyEmbedBuilder(),
+    //   readOnly: true,
+    //   showCursor: true,
+    //   expands: true,
+    //   autoFocus: true,
+    // );
   }
 }

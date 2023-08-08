@@ -11,7 +11,7 @@ class AppSideMenu extends StatelessWidget {
 
   static Future<XFile?> browseAndOpenFile() async {
     XFile? file = await openFile(acceptedTypeGroups: <XTypeGroup>[
-      const XTypeGroup(label: 'documents', extensions: <String>['txt'])
+      const XTypeGroup(label: 'documents', extensions: <String>['txt', 'docx'])
     ]);
     return file;
   }

@@ -13,9 +13,9 @@ class SideMenuTest extends StatelessWidget {
             backgroundColor: const Color(0xff764abc),
             ),
           drawer: const AppSideMenu(),
-          body: Center(
+          body: const Center(
             child: Column(
-              children: const [
+              children: [
               SizedBox(height: 50),
               ],
               ),

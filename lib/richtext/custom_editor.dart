@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_quill/flutter_quill.dart' as fq;
+
+import '../style_generator.dart';
 
 class CustomEditor extends StatelessWidget {
   CustomEditor({
     super.key,
     required this.controller,
+    required styleRules,
   }) {
-    final List<String> textValues = controller.getPlainText().split('\n');
+    if (_cachedParagraphs.isNotEmpty)
+      return; // Testing if we need to regenerate everything
+    CustomEditor.styleRules = styleRules;
+
+    final List<String> textValues = controller.document
+        .getPlainText(0, controller.document.length)
+        .split('\n');
     int stringStart = 0;
     for (int idx = 0; idx < textValues.length; idx++) {
       _cachedParagraphs.add(CachedText(
@@ -15,6 +26,11 @@ class CustomEditor extends StatelessWidget {
       ));
       stringStart += textValues[idx].length;
     }
+
+    StyleGenerator generator = StyleGenerator(rules: styleRules);
+    for (int idx = 0; idx < 20; idx++) {
+      _cachedStyles.add(generator.getNextStyle());
+    }
   }
 
   final fq.QuillController controller;
@@ -22,12 +38,10 @@ class CustomEditor extends StatelessWidget {
   static List<CachedText> _cachedParagraphs = [];
   static List<Text> _cachedWidgets = [];
   static bool invalidated = true;
+  static late StyleRules styleRules;
+  final FocusNode focusNode = FocusNode();
 
   static int _styleIndex = 0;
-
-  static Text _getCachedText(int index) {
-    return Text(_cachedParagraphs[index].text);
-  }
 
   static Text _getText(CachedText cachedText) {
     List<TextSpan> children = [];
@@ -44,7 +58,7 @@ class CustomEditor extends StatelessWidget {
     return Text.rich(TextSpan(text: strings[0], children: children));
   }
 
-  static Text getCachedText(int index) {
+  static Text _getCachedText(int index) {
     if (index >= _cachedWidgets.length) {
       for (int idx = _cachedWidgets.length; index >= idx; idx++) {
         _cachedWidgets.add(_getText(_cachedParagraphs[index]));
@@ -56,12 +70,26 @@ class CustomEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
-      itemCount: _cachedParagraphs.length,
-      itemBuilder: (context, index) => _getCachedText(index),
+    focusNode.requestFocus();
+    return TextFieldTapRegion(
+      debugLabel: "Tap Field",
+      enabled: true,
+      child: Focus(
+        focusNode: focusNode,
+        onKey: _onKey,
+        child: ListView.builder(
+          shrinkWrap: true,
+          padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+          itemCount: _cachedParagraphs.length,
+          itemBuilder: (context, index) => _getCachedText(index),
+        ),
+      ),
     );
+  }
+
+  KeyEventResult _onKey(FocusNode node, RawKeyEvent event) {
+    print(event);
+    return KeyEventResult.ignored;
   }
 }
 
