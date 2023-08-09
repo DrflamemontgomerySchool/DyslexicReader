@@ -53,13 +53,16 @@ class TestController extends TextEditingController {
   static final RegExp _punctuationRegexMatch =
       RegExp('([^$_punctuationString]*)([$_punctuationString]+)(.*)');
 
-  static TextSpan _formatWord(
-      TextStyle? defaultStyle, TextStyle? style, String word, bool addSpace) {
-    if (word.isEmpty) return TextSpan(text: addSpace ? " " : "", style: style);
+  static List<TextSpan> _formatWord(
+    TextStyle? defaultStyle,
+    TextStyle? style,
+    String word,
+  ) {
+    if (word.isEmpty) return [];
 
     RegExpMatch? match = _punctuationRegexMatch.firstMatch(word);
     if (match == null) {
-      return TextSpan(text: addSpace ? '$word ' : word, style: style);
+      return [TextSpan(text: word, style: style)];
     }
 
     List<TextSpan> text = [];
@@ -69,15 +72,13 @@ class TestController extends TextEditingController {
       final String match3 = match.group(3) ?? "";
 
       if (match1.isNotEmpty) {
-        text.add(TextSpan(
-            text: match2.isEmpty && addSpace ? '$match1 ' : match1,
-            style: style));
+        text.add(TextSpan(text: match1, style: style));
       }
 
       if (match2.isEmpty) break;
 
       text.add(TextSpan(
-        text: match3.isEmpty && addSpace ? '$match2 ' : match2,
+        text: match2,
         style: style?.merge(TextStyle(fontFamily: defaultStyle?.fontFamily)),
       ));
 
@@ -85,40 +86,47 @@ class TestController extends TextEditingController {
       match = _punctuationRegexMatch.firstMatch(match3);
 
       if (match == null) {
-        text.add(TextSpan(text: addSpace ? '$match3 ' : match3, style: style));
+        text.add(TextSpan(text: match3, style: style));
       }
     }
-
-    return TextSpan(children: text);
+    return text;
   }
 
-  List<TextSpan> _generateStyledText(String words, TextStyle? style) {
-    final List<TextSpan> words = [];
-    int styleIdx = 0;
-    for (String line in text.split('\n')) {
-      if (line.isEmpty) {
-        words.add(const TextSpan(text: '\n'));
-        continue;
-      }
-      List<String> word = line.split(' ');
-      for (int index = 0; index < word.length; index++) {
-        if (word[index].isEmpty) {
-          words.add(const TextSpan(text: ' '));
-          continue;
-        }
-        words.add(_formatWord(
-          style,
-          style?.merge(generatedStyles[styleIdx]),
-          word[index],
-          index != (word.length - 1),
-        ));
-        styleIdx++;
-        styleIdx %= _GENERATED_STYLE_LENGTH;
-      }
-      words.add(const TextSpan(text: '\n'));
+  static int _styleIndex = 0;
+
+  TextSpan _getText(String line, TextStyle? style) {
+    List<TextSpan> children = [];
+    List<String> strings = line.split(' ');
+    for (int idx = 0; idx < strings.length; idx++) {
+      children.add(
+        TextSpan(
+          text: idx > 0 ? ' ' : null,
+          children: _formatWord(
+            style,
+            style?.merge(generatedStyles[_styleIndex]),
+            strings[idx],
+          ),
+        ),
+      );
+      if (strings[idx].isEmpty) continue;
+      _styleIndex++;
+      _styleIndex %= _GENERATED_STYLE_LENGTH;
     }
 
-    return words;
+    return TextSpan(children: children);
+  }
+
+  List<TextSpan> _generateStyledText(String text, TextStyle? style) {
+    _styleIndex = 0;
+    List<String> lines = text.split('\n');
+    List<TextSpan> children = [];
+    children.add(_getText(lines[0], style));
+    for (int idx = 1; idx < lines.length; idx++) {
+      children.add(const TextSpan(text: '\n'));
+      if (lines[idx].isEmpty) continue;
+      children.add(_getText(lines[idx], style));
+    }
+    return children;
   }
 
   @override
