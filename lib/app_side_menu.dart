@@ -29,7 +29,7 @@ class AppSideMenu extends StatelessWidget {
         children: [
           ListTile(
             leading: const Icon(
-              Icons.train,
+              Icons.other_houses_sharp,
             ),
             title: const Text('Home'),
             onTap: () {
@@ -41,10 +41,17 @@ class AppSideMenu extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(
-              Icons.train,
+              Icons.file_open,
             ),
             title: const Text('Open File'),
             onTap: () async => openText(await browseAndOpenFile(), context),
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.note_add,
+            ),
+            title: const Text('New File'),
+            onTap: () async => openText(null, context),
           )
         ],
       ),

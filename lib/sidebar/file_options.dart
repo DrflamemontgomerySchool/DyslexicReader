@@ -3,8 +3,19 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 
 class FileOptions {
+  static void newFile(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => TextDisplayPage(),
+      ),
+    );
+  }
+
   static void displayFile(XFile? file, BuildContext context) {
-    if (file == null) return;
+    if (file == null) {
+      newFile(context);
+      return;
+    }
     Future<String> fileData = file.readAsString();
 
     Navigator.of(context).push(
