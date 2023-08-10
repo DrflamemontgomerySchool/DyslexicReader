@@ -45,6 +45,7 @@ class StyleGenerator {
     }
 
     if (wordRules.isEmpty) {
+      _seed++;
       return TextStyle(
         fontSize: fontSize,
         fontFamily: rules.randomFonts ? _fonts[_seed % _fonts.length] : null,
