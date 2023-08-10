@@ -9,8 +9,9 @@ import 'package:flutter/material.dart';
 // to interact with text
 
 class TextDisplayPage extends StatelessWidget {
-  TextDisplayPage({super.key, this.text});
+  TextDisplayPage({super.key, this.text, required this.fileName});
 
+  final String fileName;
   final ValueNotifier<StyleRules> _rules =
       ValueNotifier<StyleRules>(StyleRules());
   late final int seed = hashCode;
