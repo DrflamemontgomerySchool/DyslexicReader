@@ -3,12 +3,10 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 
 class FileOptions {
-  static void newFile(XFile file, BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => TextDisplayPage(
-          fileName: file.path,
-        ),
+  static MaterialPageRoute newFile(String file) {
+    return MaterialPageRoute(
+      builder: (ctx) => TextDisplayPage(
+        fileName: file,
       ),
     );
   }

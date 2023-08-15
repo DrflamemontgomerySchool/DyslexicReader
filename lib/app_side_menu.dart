@@ -2,6 +2,7 @@ import 'package:dyslexic_reader/home_page.dart';
 import 'package:dyslexic_reader/sidebar/file_options.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
 
 /*
  * The App side menu contains the file options
@@ -57,8 +58,17 @@ class AppSideMenu extends StatelessWidget {
           ),
           title: const Text('New File'),
           onTap: () async {
-            openText(null, context);
-            XFile? file = await browseAndOpenFile();
+            String? outputFile = await FilePicker.platform.saveFile(
+              dialogTitle: 'Please select an output file:',
+              fileName: 'output-file.txt',
+            );
+            if (outputFile == null) return;
+            Navigator.pop(context);
+            Navigator.pop(context);
+            Navigator.of(context).push(FileOptions.newFile(outputFile));
+            print(outputFile);
+            //openText(null, context);
+            //XFile? file = await browseAndOpenFile();
           }),
     ];
     if (onSave != null) {
