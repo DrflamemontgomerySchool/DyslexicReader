@@ -1,9 +1,15 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:dyslexic_reader/app_side_menu.dart';
 import 'package:dyslexic_reader/labeled_checkbox.dart';
 import 'package:dyslexic_reader/shaped_row.dart';
 import 'package:dyslexic_reader/style_generator.dart';
 import 'package:dyslexic_reader/test_input_holder.dart';
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
+
+import 'home_page.dart';
 
 // This is the app page that allows the user
 // to interact with text
@@ -28,9 +34,22 @@ class TextDisplayPage extends StatelessWidget {
     };
   }
 
+  Future<void> saveFile() async {
+    final Uint8List fileData =
+        Uint8List.fromList(utf8.encode(testInputHolder.text));
+    XFile textFile = XFile.fromData(fileData, mimeType: "text/plain");
+    await textFile.saveTo(fileName);
+  }
+
   Widget buildMainContent(BuildContext context, StyleRules value) {
     return Scaffold(
-      drawer: const AppSideMenu(),
+      drawer: AppSideMenu(onSave: () {
+        saveFile();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Saved $fileName'),
+          duration: const Duration(seconds: 1),
+        ));
+      }),
       appBar: AppBar(
         title: ShapedRow(
           wrapper: (BuildContext context, Widget child) => Material(
