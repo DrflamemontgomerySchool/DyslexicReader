@@ -1,7 +1,10 @@
 import 'package:dyslexic_reader/app_side_menu.dart';
+import 'package:dyslexic_reader/sidebar/file_options.dart';
 import 'package:dyslexic_reader/text_display_page.dart';
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:file_picker/file_picker.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -14,7 +17,7 @@ class HomePage extends StatelessWidget {
     ),
   );
 
-  ButtonStyleButton _createTextButton(String text, Function() onPressed) {
+  static ButtonStyleButton createTextButton(String text, Function() onPressed) {
     return ElevatedButton(
       onPressed: onPressed,
       style: textButtonStyle,
@@ -33,18 +36,23 @@ class HomePage extends StatelessWidget {
         columnSizes: [auto, 160.px, 160.px, auto],
         rowSizes: [auto, 60.px, 60.px, auto],
         children: [
-          _createTextButton(
-            "Open File",
-            () async => AppSideMenu.openText(
-                await AppSideMenu.browseAndOpenFile(), context),
-          ).withGridPlacement(columnStart: 1, rowStart: 1),
-          _createTextButton("New File", () {
-            // Navigate to a new file that you can edit
-            Navigator.of(context).pop();
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => TextDisplayPage()));
+          createTextButton("Open File", () async {
+            XFile? file = await AppSideMenu.browseAndOpenFile();
+            if (file == null) return;
+            Navigator.pop(context);
+            Navigator.of(context).push(await FileOptions.displayFile(file!));
+          }).withGridPlacement(columnStart: 1, rowStart: 1),
+          createTextButton("New File", () async {
+            String? outputFile = await FilePicker.platform.saveFile(
+              dialogTitle: 'Please select an output file:',
+              fileName: 'output-file.txt',
+            );
+            if (outputFile == null) return;
+            Navigator.pop(context);
+            Navigator.of(context).push(FileOptions.newFile(outputFile));
+            print(outputFile);
           }).withGridPlacement(columnStart: 1, rowStart: 2),
-          _createTextButton("Settings", () => null)
+          createTextButton("Settings", () => null)
               .withGridPlacement(columnStart: 2, rowStart: 1),
         ],
       ),
