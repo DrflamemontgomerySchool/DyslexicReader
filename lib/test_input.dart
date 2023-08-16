@@ -24,7 +24,7 @@ class TestInput extends StatelessWidget {
       maxLines: null,
       expands: true,
       controller: controller,
-      style: Theme.of(context).textTheme.bodyText2,
+      style: Theme.of(context).textTheme.bodyMedium,
       onChanged: onTextChange,
       readOnly: readOnly,
     );
