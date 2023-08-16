@@ -8,6 +8,7 @@ import 'package:dyslexic_reader/style_generator.dart';
 import 'package:dyslexic_reader/test_input_holder.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'home_page.dart';
 
@@ -99,10 +100,26 @@ class TextDisplayPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: _rules,
-      builder: (BuildContext context, value, Widget? child) =>
-          buildMainContent(context, value),
+    return FocusableActionDetector(
+      focusNode: FocusNode(),
+      descendantsAreFocusable: false,
+      shortcuts: const {
+        SingleActivator(LogicalKeyboardKey.keyS): _SaveFileIntent(),
+      },
+      actions: {
+        _SaveFileIntent: CallbackAction<_SaveFileIntent>(
+          onInvoke: (_) => print('saveFile'),
+        ),
+      },
+      child: ValueListenableBuilder(
+        valueListenable: _rules,
+        builder: (BuildContext context, value, Widget? child) =>
+            buildMainContent(context, value),
+      ),
     );
   }
+}
+
+class _SaveFileIntent extends Intent {
+  const _SaveFileIntent();
 }
