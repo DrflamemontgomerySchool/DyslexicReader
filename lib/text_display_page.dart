@@ -100,21 +100,26 @@ class TextDisplayPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FocusableActionDetector(
-      focusNode: FocusNode(),
-      descendantsAreFocusable: false,
+    return Shortcuts(
       shortcuts: const {
-        SingleActivator(LogicalKeyboardKey.keyS): _SaveFileIntent(),
+        SingleActivator(LogicalKeyboardKey.keyS, control: true):
+            _SaveFileIntent(),
       },
-      actions: {
-        _SaveFileIntent: CallbackAction<_SaveFileIntent>(
-          onInvoke: (_) => print('saveFile'),
+      child: Actions(
+        actions: {
+          _SaveFileIntent: CallbackAction<_SaveFileIntent>(onInvoke: (_) async {
+            await saveFile();
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Saved $fileName'),
+              duration: const Duration(seconds: 1),
+            ));
+          }),
+        },
+        child: ValueListenableBuilder(
+          valueListenable: _rules,
+          builder: (BuildContext context, value, Widget? child) =>
+              buildMainContent(context, value),
         ),
-      },
-      child: ValueListenableBuilder(
-        valueListenable: _rules,
-        builder: (BuildContext context, value, Widget? child) =>
-            buildMainContent(context, value),
       ),
     );
   }
