@@ -14,8 +14,10 @@ class DyslexicReader extends StatelessWidget {
     return MaterialApp(
       title: 'Dyslexic Reader',
       theme: ThemeData(
-        primarySwatch: Colors.grey,
+        primarySwatch: Colors.brown,
+        canvasColor: Color.fromARGB(255, 228, 202, 173),
       ),
+
       //home: const SideMenuTest(),
       home: const HomePage(),
     );
