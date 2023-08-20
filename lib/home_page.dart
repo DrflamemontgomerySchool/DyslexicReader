@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
   static ButtonStyle textButtonStyle = ButtonStyle(
     fixedSize: MaterialStateProperty.resolveWith<Size?>(
       (Set<MaterialState> states) {
-        return const Size(100, 40);
+        return const Size(300, 80);
       },
     ),
   );
@@ -21,7 +21,10 @@ class HomePage extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: textButtonStyle,
-      child: Text(text),
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 40),
+      ),
     );
   }
 
@@ -33,8 +36,8 @@ class HomePage extends StatelessWidget {
         title: const Text("Home Page"),
       ),
       body: LayoutGrid(
-        columnSizes: [auto, 160.px, 160.px, auto],
-        rowSizes: [auto, 60.px, 60.px, auto],
+        columnSizes: [auto, 300.px, auto],
+        rowSizes: [auto, 120.px, 120.px, auto],
         children: [
           createTextButton("Open File", () async {
             XFile? file = await AppSideMenu.browseAndOpenFile();
@@ -52,8 +55,6 @@ class HomePage extends StatelessWidget {
             Navigator.of(context).push(FileOptions.newFile(outputFile));
             print(outputFile);
           }).withGridPlacement(columnStart: 1, rowStart: 2),
-          createTextButton("Settings", () => null)
-              .withGridPlacement(columnStart: 2, rowStart: 1),
         ],
       ),
     );
