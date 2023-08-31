@@ -1,18 +1,13 @@
-import 'dart:convert';
-import 'dart:typed_data';
+import 'dart:io';
 
-import 'package:path/path.dart' as p;
+import 'package:dyslexic_reader/file_selector.dart';
 import 'package:dyslexic_reader/app_side_menu.dart';
 import 'package:dyslexic_reader/labeled_checkbox.dart';
 import 'package:dyslexic_reader/shaped_row.dart';
 import 'package:dyslexic_reader/style_generator.dart';
 import 'package:dyslexic_reader/test_input_holder.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'home_page.dart';
 
 // This is the app page that allows the user
 // to interact with text
@@ -33,41 +28,46 @@ class TextDisplayPage extends StatelessWidget {
   Function(bool?) _changeRules(Function(bool? value) fn) {
     return (value) {
       fn(value);
+
+      // The change doesn't occur unless I specify directly
+      // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
       _rules.notifyListeners();
     };
   }
 
-  Future<String?> saveNewFile() async {
-    String? outputFile = await FilePicker.platform.saveFile(
-      dialogTitle: 'Please select an output file:',
-      fileName: p.basename(fileName),
+  void saveNewFile(BuildContext context) {
+    FileSelector.selectFile(
+      context,
+      (name) {
+        if (name == null) return;
+        saveFile(context, name);
+      },
+      true,
     );
-    if (outputFile == null) return null;
-    final Uint8List fileData =
-        Uint8List.fromList(utf8.encode(testInputHolder.text));
-    XFile textFile = XFile.fromData(fileData, mimeType: "text/plain");
-    await textFile.saveTo(outputFile);
-    return outputFile;
   }
 
-  Future<String> saveFile() async {
-    final Uint8List fileData =
-        Uint8List.fromList(utf8.encode(testInputHolder.text));
-    XFile textFile = XFile.fromData(fileData, mimeType: "text/plain");
-    await textFile.saveTo(fileName);
-    return fileName;
+  void saveFile(BuildContext context, String name) {
+    File textFile = File(name);
+    textFile.writeAsString(testInputHolder.text);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Saved $name'),
+        duration: const Duration(seconds: 1),
+      ),
+    );
   }
 
   Widget buildMainContent(BuildContext context, StyleRules value) {
     return Scaffold(
-      drawer: AppSideMenu(onSave: (bool newName) async {
-        var name = newName ? await saveNewFile() : await saveFile();
-        if (name == null) return;
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Saved $name'),
-          duration: const Duration(seconds: 1),
-        ));
-      }),
+      drawer: AppSideMenu(
+        onSave: (bool newName) {
+          if (newName) {
+            saveNewFile(context);
+          } else {
+            saveFile(context, fileName);
+          }
+        },
+      ),
       appBar: AppBar(
         title: ShapedRow(
           wrapper: (BuildContext context, Widget child) => Material(
@@ -121,16 +121,23 @@ class TextDisplayPage extends StatelessWidget {
       shortcuts: const {
         SingleActivator(LogicalKeyboardKey.keyS, control: true):
             _SaveFileIntent(),
+        SingleActivator(LogicalKeyboardKey.keyS, shift: true, control: true):
+            _SaveAsFileIntent(),
       },
       child: Actions(
         actions: {
-          _SaveFileIntent: CallbackAction<_SaveFileIntent>(onInvoke: (_) async {
-            await saveFile();
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('Saved $fileName'),
-              duration: const Duration(seconds: 1),
-            ));
-          }),
+          _SaveFileIntent: CallbackAction<_SaveFileIntent>(
+            onInvoke: (_) {
+              saveFile(context, fileName);
+              return null;
+            },
+          ),
+          _SaveAsFileIntent: CallbackAction<_SaveAsFileIntent>(
+            onInvoke: (_) {
+              saveNewFile(context);
+              return null;
+            },
+          ),
         },
         child: ValueListenableBuilder(
           valueListenable: _rules,
@@ -144,4 +151,8 @@ class TextDisplayPage extends StatelessWidget {
 
 class _SaveFileIntent extends Intent {
   const _SaveFileIntent();
+}
+
+class _SaveAsFileIntent extends Intent {
+  const _SaveAsFileIntent();
 }

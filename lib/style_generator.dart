@@ -109,4 +109,14 @@ class StyleRules {
 
     return wordRules;
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! StyleRules) return false;
+    return other.normal == normal &&
+        other.bold == bold &&
+        other.randomSize == randomSize &&
+        other.randomFonts == randomFonts &&
+        other.nicerNumbers == nicerNumbers;
+  }
 }

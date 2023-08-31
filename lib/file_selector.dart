@@ -1,6 +1,5 @@
 import 'dart:io';
-import 'package:dyslexic_reader/shaped_row.dart';
-import 'package:flutter/services.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
 

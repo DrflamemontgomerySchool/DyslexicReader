@@ -1,5 +1,4 @@
 import 'package:dyslexic_reader/home_page.dart';
-import 'package:dyslexic_reader/side_menu_test.dart';
 import 'package:flutter/material.dart';
 
 void main() {
