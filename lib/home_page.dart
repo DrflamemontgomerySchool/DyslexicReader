@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:dyslexic_reader/app_side_menu.dart';
+import 'package:dyslexic_reader/file_selector.dart';
 import 'package:dyslexic_reader/sidebar/file_options.dart';
 import 'package:dyslexic_reader/text_display_page.dart';
 import 'package:file_selector/file_selector.dart';
@@ -36,8 +38,8 @@ class HomePage extends StatelessWidget {
         title: const Text("Home Page"),
       ),
       body: LayoutGrid(
-        columnSizes: [auto, 300.px, auto],
-        rowSizes: [auto, 120.px, 120.px, auto],
+        columnSizes: [auto, 450.px, auto],
+        rowSizes: [auto, 120.px, 120.px, 120.px, auto],
         children: [
           createTextButton("Open File", () async {
             XFile? file = await AppSideMenu.browseAndOpenFile();
@@ -55,6 +57,17 @@ class HomePage extends StatelessWidget {
             Navigator.of(context).push(FileOptions.newFile(outputFile));
             print(outputFile);
           }).withGridPlacement(columnStart: 1, rowStart: 2),
+          createTextButton("Test File Picker", () {
+            FileSelector.selectFile(
+              context,
+              (name) {
+                if (name == null) return;
+                Navigator.pop(context);
+                Navigator.of(context).push(FileOptions.newFile(name));
+              },
+              true,
+            );
+          }).withGridPlacement(columnStart: 1, rowStart: 3),
         ],
       ),
     );

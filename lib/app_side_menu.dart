@@ -17,7 +17,7 @@ class AppSideMenu extends StatelessWidget {
     return file;
   }
 
-  final Function()? onSave;
+  final Function(bool)? onSave;
 
   static void openText(XFile? file, BuildContext context) {
     //Navigator.pop(context);
@@ -72,17 +72,29 @@ class AppSideMenu extends StatelessWidget {
           }),
     ];
     if (onSave != null) {
-      optionButtons.add(
-        ListTile(
-          leading: const Icon(
-            Icons.save_as,
+      optionButtons.addAll(
+        [
+          ListTile(
+            leading: const Icon(
+              Icons.save,
+            ),
+            title: const Text("Save File"),
+            onTap: () {
+              onSave!(false);
+              Navigator.pop(context);
+            },
           ),
-          title: const Text("Save File"),
-          onTap: () {
-            onSave!();
-            Navigator.pop(context);
-          },
-        ),
+          ListTile(
+            leading: const Icon(
+              Icons.save_as,
+            ),
+            title: const Text("Save as File"),
+            onTap: () async {
+              onSave!(true);
+              Navigator.pop(context);
+            },
+          )
+        ],
       );
     }
     return Drawer(
