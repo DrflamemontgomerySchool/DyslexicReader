@@ -38,11 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   intl: ^0.18.1
   faker: ^2.1.0
-  quill_html_editor: ^2.1.9
-  markdown_editor_plus: ^0.2.13
   google_fonts: ^4.0.4
-  easy_sidemenu: ^0.4.1+1
-  open_file: ^3.3.2
   flutter_layout_grid: ^2.0.3
 
 dev_dependencies:
