@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:dyslexic_reader/file_selector.dart';
 import 'package:dyslexic_reader/app_side_menu.dart';
-import 'package:dyslexic_reader/help_page.dart';
 import 'package:dyslexic_reader/labeled_checkbox.dart';
 import 'package:dyslexic_reader/shaped_row.dart';
 import 'package:dyslexic_reader/style_generator.dart';
@@ -14,16 +13,22 @@ import 'package:flutter/services.dart';
 // to interact with text
 
 class TextDisplayPage extends StatelessWidget {
-  TextDisplayPage({super.key, this.text, required this.fileName});
+  TextDisplayPage({
+    super.key,
+    this.text,
+    required this.fileName,
+    this.isStatic = false,
+  });
 
   final String fileName;
   final ValueNotifier<StyleRules> _rules =
       ValueNotifier<StyleRules>(StyleRules());
   late final int seed = hashCode;
   final String? text;
+  final bool isStatic;
   late final TestInputHolder testInputHolder = TestInputHolder(
     text: text ?? "Begin Writing...",
-    readOnly: false,
+    readOnly: isStatic,
   );
 
   Function(bool?) _changeRules(Function(bool? value) fn) {
@@ -37,6 +42,7 @@ class TextDisplayPage extends StatelessWidget {
   }
 
   void saveNewFile(BuildContext context) {
+    if (isStatic) return;
     FileSelector.selectFile(
       context,
       (name) {
@@ -48,6 +54,7 @@ class TextDisplayPage extends StatelessWidget {
   }
 
   void saveFile(BuildContext context, String name) {
+    if (isStatic) return;
     File textFile = File(name);
     textFile.writeAsString(testInputHolder.text);
     ScaffoldMessenger.of(context).showSnackBar(
@@ -61,20 +68,21 @@ class TextDisplayPage extends StatelessWidget {
   Widget buildMainContent(BuildContext context, StyleRules value) {
     return Scaffold(
       drawer: AppSideMenu(
-        onSave: (bool newName) {
-          if (newName) {
-            saveNewFile(context);
-          } else {
-            saveFile(context, fileName);
-          }
-        },
+        onSave: isStatic
+            ? null
+            : (bool newName) {
+                if (newName) {
+                  saveNewFile(context);
+                } else {
+                  saveFile(context, fileName);
+                }
+              },
       ),
       appBar: AppBar(
         title: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              HelpPage.createHelpButton(context),
               ShapedRow(
                 wrapper: (BuildContext context, Widget child) => Material(
                   color: Theme.of(context).colorScheme.background,
