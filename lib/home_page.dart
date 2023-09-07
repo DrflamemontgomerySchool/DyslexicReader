@@ -3,6 +3,8 @@ import 'package:dyslexic_reader/sidebar/file_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 
+import 'help_page.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -31,6 +33,9 @@ class HomePage extends StatelessWidget {
       drawer: const AppSideMenu(),
       appBar: AppBar(
         title: const Text("Home Page"),
+        actions: [
+          HelpPage.createHelpButton(context),
+        ],
       ),
       body: LayoutGrid(
         columnSizes: [auto, 300.px, auto],

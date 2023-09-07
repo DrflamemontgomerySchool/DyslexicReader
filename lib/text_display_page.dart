@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dyslexic_reader/file_selector.dart';
 import 'package:dyslexic_reader/app_side_menu.dart';
+import 'package:dyslexic_reader/help_page.dart';
 import 'package:dyslexic_reader/labeled_checkbox.dart';
 import 'package:dyslexic_reader/shaped_row.dart';
 import 'package:dyslexic_reader/style_generator.dart';
@@ -71,37 +72,43 @@ class TextDisplayPage extends StatelessWidget {
       appBar: AppBar(
         title: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: ShapedRow(
-            wrapper: (BuildContext context, Widget child) => Material(
-              color: Theme.of(context).colorScheme.background,
-              borderRadius: BorderRadius.circular(5.0),
-              child: child,
-            ),
-            padding: const EdgeInsets.only(left: 5),
-            margin: const EdgeInsets.only(right: 10),
+          child: Row(
             children: [
-              LabeledCheckBox(
-                onChanged: _changeRules((value) => _rules.value.bold = value!),
-                value: _rules.value.bold,
-                label: const Text("Bold"),
-              ),
-              LabeledCheckBox(
-                onChanged:
-                    _changeRules((value) => _rules.value.normal = value!),
-                value: _rules.value.normal,
-                label: const Text("Normal"),
-              ),
-              LabeledCheckBox(
-                onChanged:
-                    _changeRules((value) => _rules.value.randomSize = value!),
-                value: _rules.value.randomSize,
-                label: const Text("Change Size"),
-              ),
-              LabeledCheckBox(
-                onChanged:
-                    _changeRules((value) => _rules.value.randomFonts = value!),
-                value: _rules.value.randomFonts,
-                label: const Text("Change Fonts"),
+              HelpPage.createHelpButton(context),
+              ShapedRow(
+                wrapper: (BuildContext context, Widget child) => Material(
+                  color: Theme.of(context).colorScheme.background,
+                  borderRadius: BorderRadius.circular(5.0),
+                  child: child,
+                ),
+                padding: const EdgeInsets.only(left: 10),
+                margin: const EdgeInsets.only(right: 10),
+                children: [
+                  LabeledCheckBox(
+                    onChanged:
+                        _changeRules((value) => _rules.value.bold = value!),
+                    value: _rules.value.bold,
+                    label: const Text("Bold"),
+                  ),
+                  LabeledCheckBox(
+                    onChanged:
+                        _changeRules((value) => _rules.value.normal = value!),
+                    value: _rules.value.normal,
+                    label: const Text("Normal"),
+                  ),
+                  LabeledCheckBox(
+                    onChanged: _changeRules(
+                        (value) => _rules.value.randomSize = value!),
+                    value: _rules.value.randomSize,
+                    label: const Text("Change Size"),
+                  ),
+                  LabeledCheckBox(
+                    onChanged: _changeRules(
+                        (value) => _rules.value.randomFonts = value!),
+                    value: _rules.value.randomFonts,
+                    label: const Text("Change Fonts"),
+                  ),
+                ],
               ),
             ],
           ),
