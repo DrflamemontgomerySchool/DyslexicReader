@@ -39,7 +39,7 @@ class StyleGenerator {
   }
 
   TextStyle getNextStyle() {
-    double fontSize = 14;
+    double fontSize = 18;
     if (rules.randomSize) {
       fontSize += rng.nextInt(3) * 3;
     }

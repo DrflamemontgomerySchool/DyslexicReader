@@ -12,7 +12,6 @@ class FileOptions {
         if (name == null) return;
         File file = File(name);
 
-        Navigator.pop(context);
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => TextDisplayPage(
@@ -31,7 +30,6 @@ class FileOptions {
       context,
       (name) {
         if (name == null) return;
-        Navigator.pop(context);
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => TextDisplayPage(

@@ -1,37 +1,96 @@
 import 'dart:io';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart' as pp;
 import 'package:flutter/material.dart';
 
 class FileSelector extends StatelessWidget {
-  const FileSelector(
-      {super.key,
-      required this.onSelect,
-      required this.path,
-      required this.warnOnOverwrite});
+  const FileSelector({
+    super.key,
+    required this.onSelect,
+    required this.path,
+    required this.selectingNewFile,
+  });
 
   final Function(String?) onSelect;
   final String path;
-  final bool warnOnOverwrite;
+  final bool selectingNewFile;
 
-  static void selectFile(
-      BuildContext context, Function(String?) onSelect, bool warnOnOverwrite) {
+  static void selectFileMobile(
+    BuildContext context,
+    Function(String?) onSelect,
+    bool selectingNewFile,
+  ) {
+    Future<Directory> dir = pp.getApplicationDocumentsDirectory();
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => FileSelector(
-          onSelect: onSelect,
-          path: Directory.current.path,
-          warnOnOverwrite: warnOnOverwrite,
+        builder: (context) => FutureBuilder(
+          future: dir,
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.hasData) {
+              return FileSelector(
+                onSelect: onSelect,
+                path: (snapshot.data as Directory).path,
+                selectingNewFile: selectingNewFile,
+              );
+            } else {
+              return const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 60,
+                      height: 60,
+                      child: CircularProgressIndicator(),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 16),
+                      child: Text("Getting Directory"),
+                    )
+                  ],
+                ),
+              );
+            }
+          },
         ),
       ),
     );
   }
 
+  static void selectFilePC(
+    BuildContext context,
+    Function(String?) onSelect,
+    bool selectingNewFile,
+  ) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => FileSelector(
+          onSelect: onSelect,
+          path: Directory.current.path,
+          selectingNewFile: selectingNewFile,
+        ),
+      ),
+    );
+  }
+
+  static void selectFile(
+    BuildContext context,
+    Function(String?) onSelect,
+    bool selectingNewFile,
+  ) {
+    if (Platform.isAndroid || Platform.isIOS) {
+      selectFileMobile(context, onSelect, selectingNewFile);
+    } else {
+      selectFilePC(context, onSelect, selectingNewFile);
+    }
+  }
+
+  void warnOverwrite(BuildContext context) {}
+
   @override
   Widget build(BuildContext context) {
     TextEditingController controller = TextEditingController(text: "File.txt");
     ValueNotifier<String> pathNotifier = ValueNotifier<String>(path);
-    List<String> fileNames = [];
     return Scaffold(
       appBar: AppBar(
           leading: Row(
@@ -93,10 +152,11 @@ class FileSelector extends StatelessWidget {
           selections.addAll([
             for (String document in documents)
               GestureDetector(
-                onDoubleTap: () {
-                  Navigator.pop(context);
-                  onSelect(document);
-                },
+                onDoubleTap: () => alertDialog(
+                  context,
+                  p.basename(document),
+                  document,
+                ),
                 onTap: () {
                   controller.text = p.basename(document);
                 },
@@ -145,21 +205,67 @@ class FileSelector extends StatelessWidget {
           child: const Text("Cancel"),
         ),
         TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-            if (fileNames.contains(controller.text)) {
-              print('${controller.text} exists');
-            } else {
-              onSelect('${pathNotifier.value}/${controller.text}');
-            }
-          },
+          onPressed: () => alertDialog(
+            context,
+            controller.text,
+            '${pathNotifier.value}/${controller.text}',
+          ),
           child: const Text("Open"),
         )
       ],
     );
   }
-}
 
-class _MoveBackIntent extends Intent {
-  const _MoveBackIntent();
+  void alertDialog(BuildContext context, String fileName, String filePath) {
+    File selectedFile = File(filePath);
+    if (selectingNewFile && selectedFile.existsSync()) {
+      showAlertDialog(
+        context,
+        titleText: 'File "$fileName" Already Exists',
+        message: "Are you sure that you want to overwrite the file",
+        buttons: {
+          "Cancel": null,
+          "Overwrite": () {
+            Navigator.pop(context);
+            onSelect(fileName);
+          },
+        },
+      );
+    } else if (!selectingNewFile && !selectedFile.existsSync()) {
+      showAlertDialog(
+        context,
+        titleText: 'File "$fileName" Doesn\'t Exist',
+        buttons: {
+          "OK": () => null,
+        },
+      );
+    } else {
+      Navigator.pop(context);
+      onSelect(filePath);
+    }
+  }
+
+  void showAlertDialog(
+    BuildContext context, {
+    required String titleText,
+    String? message,
+    required Map<String, Function()?> buttons,
+  }) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(titleText),
+        content: message == null ? null : Text(message),
+        actions: [
+          for (String text in buttons.keys)
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  if (buttons[text] != null) buttons[text]!();
+                },
+                child: Text(text)),
+        ],
+      ),
+    );
+  }
 }
