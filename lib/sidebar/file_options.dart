@@ -8,7 +8,7 @@ class FileOptions {
   static void displayIOFile(BuildContext context) {
     FileSelector.selectFile(
       context,
-      (name) {
+      (name, context) {
         if (name == null) return;
         File file = File(name);
 
@@ -28,7 +28,7 @@ class FileOptions {
   static void openNewIOFile(BuildContext context) {
     FileSelector.selectFile(
       context,
-      (name) {
+      (name, context) {
         if (name == null) return;
         Navigator.of(context).push(
           MaterialPageRoute(
