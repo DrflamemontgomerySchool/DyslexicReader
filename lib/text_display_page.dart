@@ -13,16 +13,22 @@ import 'package:flutter/services.dart';
 // to interact with text
 
 class TextDisplayPage extends StatelessWidget {
-  TextDisplayPage({super.key, this.text, required this.fileName});
+  TextDisplayPage({
+    super.key,
+    this.text,
+    required this.fileName,
+    this.isStatic = false,
+  });
 
   final String fileName;
   final ValueNotifier<StyleRules> _rules =
       ValueNotifier<StyleRules>(StyleRules());
   late final int seed = hashCode;
   final String? text;
+  final bool isStatic;
   late final TestInputHolder testInputHolder = TestInputHolder(
     text: text ?? "Begin Writing...",
-    readOnly: false,
+    readOnly: isStatic,
   );
 
   Function(bool?) _changeRules(Function(bool? value) fn) {
@@ -36,6 +42,7 @@ class TextDisplayPage extends StatelessWidget {
   }
 
   void saveNewFile(BuildContext context) {
+    if (isStatic) return;
     FileSelector.selectFile(
       context,
       (name) {
@@ -47,6 +54,7 @@ class TextDisplayPage extends StatelessWidget {
   }
 
   void saveFile(BuildContext context, String name) {
+    if (isStatic) return;
     File textFile = File(name);
     textFile.writeAsString(testInputHolder.text);
     ScaffoldMessenger.of(context).showSnackBar(
@@ -60,48 +68,55 @@ class TextDisplayPage extends StatelessWidget {
   Widget buildMainContent(BuildContext context, StyleRules value) {
     return Scaffold(
       drawer: AppSideMenu(
-        onSave: (bool newName) {
-          if (newName) {
-            saveNewFile(context);
-          } else {
-            saveFile(context, fileName);
-          }
-        },
+        onSave: isStatic
+            ? null
+            : (bool newName) {
+                if (newName) {
+                  saveNewFile(context);
+                } else {
+                  saveFile(context, fileName);
+                }
+              },
       ),
       appBar: AppBar(
         title: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: ShapedRow(
-            wrapper: (BuildContext context, Widget child) => Material(
-              color: Theme.of(context).colorScheme.background,
-              borderRadius: BorderRadius.circular(5.0),
-              child: child,
-            ),
-            padding: const EdgeInsets.only(left: 5),
-            margin: const EdgeInsets.only(right: 10),
+          child: Row(
             children: [
-              LabeledCheckBox(
-                onChanged: _changeRules((value) => _rules.value.bold = value!),
-                value: _rules.value.bold,
-                label: const Text("Bold"),
-              ),
-              LabeledCheckBox(
-                onChanged:
-                    _changeRules((value) => _rules.value.normal = value!),
-                value: _rules.value.normal,
-                label: const Text("Normal"),
-              ),
-              LabeledCheckBox(
-                onChanged:
-                    _changeRules((value) => _rules.value.randomSize = value!),
-                value: _rules.value.randomSize,
-                label: const Text("Change Size"),
-              ),
-              LabeledCheckBox(
-                onChanged:
-                    _changeRules((value) => _rules.value.randomFonts = value!),
-                value: _rules.value.randomFonts,
-                label: const Text("Change Fonts"),
+              ShapedRow(
+                wrapper: (BuildContext context, Widget child) => Material(
+                  color: Theme.of(context).colorScheme.background,
+                  borderRadius: BorderRadius.circular(5.0),
+                  child: child,
+                ),
+                padding: const EdgeInsets.only(left: 10),
+                margin: const EdgeInsets.only(right: 10),
+                children: [
+                  LabeledCheckBox(
+                    onChanged:
+                        _changeRules((value) => _rules.value.bold = value!),
+                    value: _rules.value.bold,
+                    label: const Text("Bold"),
+                  ),
+                  LabeledCheckBox(
+                    onChanged:
+                        _changeRules((value) => _rules.value.normal = value!),
+                    value: _rules.value.normal,
+                    label: const Text("Normal"),
+                  ),
+                  LabeledCheckBox(
+                    onChanged: _changeRules(
+                        (value) => _rules.value.randomSize = value!),
+                    value: _rules.value.randomSize,
+                    label: const Text("Change Size"),
+                  ),
+                  LabeledCheckBox(
+                    onChanged: _changeRules(
+                        (value) => _rules.value.randomFonts = value!),
+                    value: _rules.value.randomFonts,
+                    label: const Text("Change Fonts"),
+                  ),
+                ],
               ),
             ],
           ),
