@@ -45,7 +45,7 @@ class TextDisplayPage extends StatelessWidget {
     if (isStatic) return;
     FileSelector.selectFile(
       context,
-      (name) {
+      (name, context) {
         if (name == null) return;
         saveFile(context, name);
       },

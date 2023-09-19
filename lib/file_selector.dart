@@ -12,13 +12,13 @@ class FileSelector extends StatelessWidget {
     required this.selectingNewFile,
   });
 
-  final Function(String?) onSelect;
+  final Function(String?, BuildContext) onSelect;
   final String path;
   final bool selectingNewFile;
 
   static void selectFileMobile(
     BuildContext context,
-    Function(String?) onSelect,
+    Function(String?, BuildContext) onSelect,
     bool selectingNewFile,
   ) {
     Future<Directory> dir = pp.getApplicationDocumentsDirectory();
@@ -59,7 +59,7 @@ class FileSelector extends StatelessWidget {
 
   static void selectFilePC(
     BuildContext context,
-    Function(String?) onSelect,
+    Function(String?, BuildContext) onSelect,
     bool selectingNewFile,
   ) {
     Navigator.of(context).push(
@@ -75,7 +75,7 @@ class FileSelector extends StatelessWidget {
 
   static void selectFile(
     BuildContext context,
-    Function(String?) onSelect,
+    Function(String?, BuildContext) onSelect,
     bool selectingNewFile,
   ) {
     if (Platform.isAndroid || Platform.isIOS) {
@@ -200,7 +200,7 @@ class FileSelector extends StatelessWidget {
         TextButton(
           onPressed: () {
             Navigator.pop(context);
-            onSelect(null);
+            onSelect(null, context);
           },
           child: const Text("Cancel"),
         ),
@@ -216,7 +216,26 @@ class FileSelector extends StatelessWidget {
     );
   }
 
-  void alertDialog(BuildContext context, String fileName, String filePath) {
+  void alertDialog(BuildContext context, String fileName, String filePath,
+      {bool allowNonTXT = false}) {
+    if (!allowNonTXT && selectingNewFile && p.extension(fileName) != '.txt') {
+      showAlertDialog(
+        context,
+        titleText: 'File "$fileName" is not a ".txt" file',
+        message:
+            'Do you want to to create a non ".txt" file.\nWarning: You will not be able to find it in this File Browser',
+        buttons: {
+          "Cancel": null,
+          'Create as $fileName.txt': () {
+            alertDialog(context, '$fileName.txt', '$filePath.txt');
+          },
+          'Keep as $fileName': () {
+            alertDialog(context, fileName, filePath, allowNonTXT: true);
+          },
+        },
+      );
+      return;
+    }
     File selectedFile = File(filePath);
     if (selectingNewFile && selectedFile.existsSync()) {
       showAlertDialog(
@@ -226,8 +245,7 @@ class FileSelector extends StatelessWidget {
         buttons: {
           "Cancel": null,
           "Overwrite": () {
-            Navigator.pop(context);
-            onSelect(fileName);
+            onSelect(fileName, context);
           },
         },
       );
@@ -240,8 +258,7 @@ class FileSelector extends StatelessWidget {
         },
       );
     } else {
-      Navigator.pop(context);
-      onSelect(filePath);
+      onSelect(filePath, context);
     }
   }
 

@@ -24,11 +24,6 @@ class HelpPage extends StatelessWidget {
     );
   }
 
-  TextStyle? _headlineStyle(BuildContext context) =>
-      Theme.of(context).textTheme.headlineLarge;
-  TextStyle? _bodyStyle(BuildContext context) =>
-      Theme.of(context).textTheme.titleMedium;
-
   @override
   Widget build(BuildContext context) {
     return TextDisplayPage(
