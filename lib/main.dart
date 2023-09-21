@@ -16,8 +16,6 @@ class DyslexicReader extends StatelessWidget {
         primarySwatch: Colors.brown,
         canvasColor: const Color.fromARGB(255, 228, 202, 173),
       ),
-
-      //home: const SideMenuTest(),
       home: const HomePage(),
     );
   }
